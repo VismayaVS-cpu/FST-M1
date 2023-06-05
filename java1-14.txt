@@ -1,0 +1,536 @@
+package activities;
+
+public class Activity1 {
+    public static void main(String[] args) {
+        Car ertiga =new Car();
+        ertiga.make=2020;
+        ertiga.color="Grey";
+        ertiga.transmission="Manual";
+
+        ertiga.Displaycharacteristics();
+        ertiga.accelarate();
+        ertiga.brake();
+    }
+
+    public static class Car {
+        String color;
+        String transmission;
+        int make;
+        int tyres;
+        int doors;
+
+        public Car() {
+            tyres= 4;
+            doors= 4;
+        }
+
+        public void Displaycharacteristics() {
+           System.out.println("colour:" + color);
+           System.out.println("transmission:" + transmission);
+           System.out.println("make:" + make);
+           System.out.println("tyres:" + tyres);
+           System.out.println("doors:" + doors);
+       }
+        public void accelarate() {
+            System.out.println("Car is moving forward");
+        }
+        public void brake() {
+            System.out.println("Car is stopped");
+        }
+    }
+}
+ 
+Activity 2
+package activities;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Activity10 {
+    public static void main(String[] args) {
+        Set<String> hs = new HashSet<>();
+        hs.add("Tom");
+        hs.add("Nadine");
+        hs.add("Fady");
+        hs.add("Rosa");
+        hs.add("Joe");
+        hs.add("Sam");
+
+        System.out.println("Set"+hs);
+        System.out.println("Size:"+hs.size());
+        System.out.println("Remove:"+hs.remove("Tom"));
+        System.out.println("Remove:"+hs.remove("Tam"));
+        System.out.println("Contains:"+hs.contains("Nadine"));
+
+        System.out.println("Set"+hs);
+    }
+}
+Activity 3: 
+
+package activities;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Activity11 {
+    public static void main(String[] args) {
+        Map<Integer, String> colours = new HashMap<Integer, String>();
+        colours.put(1, "Orange");
+        colours.put(2, "Blue");
+        colours.put(3, "Red");
+        colours.put(4, "Green");
+        colours.put(5, "Black");
+
+        System.out.println("Initial Map: " + colours);
+
+        colours.remove(5);
+
+        if (colours.containsValue("Green")) {
+            System.out.println("Green present");
+        } else {
+            System.out.println("Green absent");
+        }
+        System.out.println("New Map: " + colours);
+
+        System.out.println("Size: " + colours.size());
+    }
+}
+ Activity 4:
+
+package activities;
+
+interface Addable {
+    int add(int num1, int num2);
+}
+
+public class Activity12 {
+    public static void main(String[] args) {
+
+        // Lambda expression without Body.
+        Addable ad1 = (num1, num2) -> (num1 + num2);
+        System.out.println(ad1.add(5, 15));
+
+        // Lambda expression with Body.
+        Addable ad2 = (int num1, int num2) -> {
+            return (num1 + num2);
+        };
+        System.out.println(ad2.add(20, 30));
+    }
+}
+  
+Activity 5:
+
+package activities;
+
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Activity13 {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Random indexGen = new Random();
+
+        System.out.print("Enter integers values only and press non-integer to terminate ");
+
+        while(scan.hasNextInt()) {
+            list.add(scan.nextInt());
+        }
+        scan.close();
+
+        System.out.print(list);
+        Integer nums[] = list.toArray(new Integer[0]);
+        int index = indexGen.nextInt(nums.length);
+        System.out.println("\n Random Index from list: " + index);
+        System.out.println("Value in array at Random index: " + nums[index]);
+
+
+    }
+}
+
+Activity 6:
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class Activity14 {
+        public static void main(String[] args) throws IOException {
+            File file = new File("src/main/resources/testfile1.txt");
+            boolean fStatus = file.createNewFile();
+
+            if(fStatus)
+                System.out.println("File created");
+            else
+                System.out.println("Error in file creation");
+
+            // Writing into the file
+            Path fileName = Path.of("src/main/resources/testfile1.txt");
+            Files.writeString(fileName, "Hello");
+
+            //get the file Object
+            File fileUtil = FileUtils.getFile("src/main/resources/testfile1.txt");
+            //Read file
+            System.out.println("Data in file: " + FileUtils.readFileToString(fileUtil, "UTF8"));
+
+        //Create directory
+        File destDir = new File("resources");
+        //Copy file to directory
+        FileUtils.copyFileToDirectory(file, destDir);
+
+        //Get file from new directory
+        File newFile = FileUtils.getFile(destDir, "testfile1.txt");
+        //Read data from file
+        String newFileData = FileUtils.readFileToString(newFile, "UTF8");
+        System.out.println("Data in new file: " + newFileData);
+    }
+}
+Activity 7:
+
+package activities;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Activity15 {
+    private static String FILE_NAME = "src/main/resources/TestSheet.xlsx";
+    public static void main(String[] args) {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Datatypes in Java");
+        Object[][] datatypes = {
+                {"Datatype", "Type", "Size(in bytes)"},
+                {"int", "Primitive", 2},
+                {"float", "Primitive", 4},
+                {"double", "Primitive", 8},
+                {"char", "Primitive", 1},
+                {"String", "Non-Primitive", "No fixed size"}
+        };
+
+        int rowNum = 0;
+        System.out.println("Creating excel");
+        for (Object[] datatype : datatypes) {
+            Row row = sheet.createRow(rowNum++);
+            int colNum = 0;
+            for (Object field : datatype) {
+                Cell cell = row.createCell(colNum++);
+                if (field instanceof String) {
+                    cell.setCellValue((String) field);
+                } else if (field instanceof Integer) {
+                    cell.setCellValue((Integer) field);
+                }
+            }
+        }
+        try{
+            FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("FIle not found");
+            throw new RuntimeException(e);
+        }
+        System.out.println("Done");
+    }
+}
+Activity 8:
+
+package activities;
+
+public class Activity2 {
+    public static void main(String[] args) {
+        int[] Num = {10, 77, 10, 54, -11, 10};
+        int expsum = 0;
+        for (int i = 0; i <= 5; i++) {
+            if (Num[i] == 10)
+                expsum += 10;
+        }
+        if (expsum == 30)
+            System.out.println("Sum is coming correct i.e." + expsum);
+        else
+            System.out.println("Sum is not coming correct i.e." + expsum);
+    }
+
+}
+Activity 9:
+
+package activities;
+
+public class Activity3 {
+    public static void main(String[] args) {
+        double seconds = 1000000000;
+
+        double EarthSeconds = 31557600;
+        double MercurySeconds = 0.2408467;
+        double VenusSeconds = 0.61519726;
+        double MarsSeconds = 1.8808158;
+        double JupiterSeconds = 11.862615;
+        double SaturnSeconds = 29.447498;
+        double UranusSeconds = 84.016846;
+        double NeptuneSeconds = 164.79132;
+
+        System.out.println("Age on Mercury: " + seconds / EarthSeconds / MercurySeconds);
+        System.out.println("Age on Venus: " + seconds / EarthSeconds / VenusSeconds);
+        System.out.println("Age on Earth: " + seconds / EarthSeconds);
+        System.out.println("Age on Mars: " + seconds / EarthSeconds / MarsSeconds);
+        System.out.println("Age on Jupiter: " + seconds / EarthSeconds / JupiterSeconds);
+        System.out.println("Age on Saturn: " + seconds / EarthSeconds / SaturnSeconds);
+        System.out.println("Age on Uranus: " + seconds / EarthSeconds / UranusSeconds);
+        System.out.println("Age on Neptune: " + seconds / EarthSeconds / NeptuneSeconds);
+    }
+}
+activity 10:
+
+package activities;
+
+import java.util.Arrays;
+
+public class Activity4 {
+    static int[] Sort(int a[])
+    {
+        int length = a.length;
+        int i, j, temp;
+        for (i = 1; i < length; i++) {
+            temp = a[i];
+            j = i - 1;
+
+            while (j >= 0 && temp <= a[j]) {
+                a[j + 1] = a[j];
+                j = j - 1;
+            }
+            a[j + 1] = temp;
+        }
+        return a;
+    }
+    public static void main(String[] args) {
+        int[] Num={6,2,8,4,1,3,7,5,9};
+        int a[]=Sort(Num);
+        System.out.println(Arrays.toString(a));
+    }
+
+}
+Activity 11:
+
+package activities;
+
+public class Activity5 {
+    public static void main(String[] args) {
+        String title="Midnight Sun";
+        MyBook newNovel= new MyBook();
+        //Set title
+        newNovel.setTitle(title);
+        //Print result
+        System.out.println("The title is: " + newNovel.getTitle());
+    }
+
+    abstract static class Book {
+        String title;
+        abstract void setTitle(String s);
+        public String getTitle() {
+            return title;
+        }
+    }
+
+    public static class MyBook extends Book {
+        public void setTitle(String s) {
+            title = s;
+        }
+
+
+    }
+}
+Activity 12:
+
+package activities;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Activity6 {
+    public static void main(String[] args) throws InterruptedException {
+        Plane aero =new Plane(10);
+        aero.onboard("Max");
+        aero.onboard("Sam");
+        aero.onboard("John");
+        aero.onboard("Kevin");
+
+        System.out.println("Take off Time:" +aero.takeoff());
+        System.out.println("Passengers:" + aero.getPassesngers());
+        Thread.sleep(5000);
+        aero.land();
+        System.out.println("Land Time:" + aero.getLastTimeLanded());
+        System.out.println("Passengers:" + aero.getPassesngers());
+    }
+
+    static class Plane  {
+         private List<String> passengers;
+         private int maxPassengers;
+         private Date lastTimeTookOf;
+         private Date lastTimeLanded;
+
+         public Plane(int p){
+             maxPassengers=p;
+             passengers= new ArrayList<>();
+         }
+
+         public void onboard(String S){
+             passengers.add(S);
+         }
+         public Date takeoff(){
+             lastTimeTookOf=new Date();
+             return lastTimeTookOf;
+         }
+         public void land(){
+             lastTimeLanded= new Date();
+             passengers.clear();
+         }
+         public Date getLastTimeLanded(){
+             return lastTimeLanded;
+         }
+         public List getPassesngers(){
+             return passengers;
+         }
+    }
+}
+ 26 changes: 26 additions & 0 deletions26  
+Activity 13:
+
+package activities;
+
+public class Activity7 {
+    public static void main(String args[]) {
+        MountainBike mb = new MountainBike(3,0,25);
+        System.out.println(mb.bicycleDesc());
+        mb.speedUp(20);
+        mb.applyBrake(5);
+    }
+
+    public static class MountainBike extends Bicycle{
+        public int seatheight;
+
+        public MountainBike(int a,int b,int c){
+            super(a,b);
+            seatheight=c;
+        }
+
+        public void setHeight(int newValue) {
+            seatheight = newValue;
+        }
+        public String bicycleDesc() {
+            return("No of gears are "+ gears + "\nSpeed of bicycle is " + speed);
+        }
+    }
+}
+ Activity 14:
+
+package activities;
+
+public class Activity8 {
+    public static void main(String[] args){
+        try {
+            // Method call with correct input
+            Activity8.exceptionTest("Will print to console");
+            // Method call with incorrect input
+            Activity8.exceptionTest(null); // Exception is thrown here
+            Activity8.exceptionTest("Won't execute");
+        } catch(CustomException mae) {
+            System.out.println("Inside catch block: " + mae.getMessage());
+        }
+    }
+    static void exceptionTest(String S) throws CustomException{
+        if(S==null) {
+            throw new CustomException("String value is null");
+        }else{
+            System.out.println(S);
+        }
+
+    }
+
+    public static class CustomException extends Exception{
+        private String message;
+
+        public CustomException(String S){
+            message=S;
+        }
+
+        @Override
+        public String getMessage() {
+            return message;
+        }
+
+    }
+}
+Activity 15:
+
+package activities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Activity9 {
+    public static void main(String[] args) {
+        List<String> mylist = new ArrayList<String>();
+        mylist.add("Sam");
+        mylist.add("John");
+        mylist.add("Will");
+        mylist.add("Angelo");
+        mylist.add("Joseph");
+
+        for (String S:mylist) {
+            System.out.println(S);
+        }
+
+        System.out.println("Third Element:"+mylist.get(2));
+        System.out.println("Contain Sam:"+mylist.contains("Sam"));
+        System.out.println("Size:"+mylist.size());
+        System.out.println("Remove:"+mylist.remove("John"));
+        System.out.println("Size:"+mylist.size());
+    }
+}
+ Activity 16;
+
+package activities;
+
+interface BicycleParts{
+    public int gears=0;
+    public int speed=0;
+}
+interface BicycleOperations{
+    public void applyBrake(int d);
+    public void speedUp(int i);
+}
+
+public class Bicycle implements BicycleOperations,BicycleParts{
+    public int gears;
+    public int speed;
+    public Bicycle(int a, int b){
+        gears=a;
+        speed=b;
+    }
+    public void applyBrake(int x){
+        speed-=x;
+        System.out.println("Speed:"+speed);
+    }
+    public void speedUp(int x){
+        speed+=x;
+        System.out.println("Speed:"+speed);
+    }
+    public String bicycleDesc() {
+        return("No of gears are "+ gears + "\nSpeed of bicycle is " + speed);
+    }
+}
+
